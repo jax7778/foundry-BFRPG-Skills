@@ -1,4 +1,4 @@
-# BFRPG Secondary Skills
+# BFRPG Secondary Skills-WIP
 
 This Foundry VTT module implements the Secondary Skills system for the Basic Fantasy Role-Playing Game.
 

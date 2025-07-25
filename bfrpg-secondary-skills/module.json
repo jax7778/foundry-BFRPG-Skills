@@ -5,8 +5,8 @@
   "version": "1.0.0",
   "authors": [{ "name": "jax7778" }],
   "system": "basicfantasy",
-  "url": "https://github.com/foundry-BFRPG-Skills/bfrpg-secondary-skills",
-  "manifest": "https://foundry-BFRPG-Skills.github.io/bfrpg-secondary-skills/module.json",
-  "download": "https://foundry-BFRPG-Skills.github.io/bfrpg-secondary-skills/bfrpg-secondary-skills.zip",
+  "url": "https://github.com/jax7778/foundry-BFRPG-Skills/bfrpg-secondary-skills",
+  "manifest": "https://jax7778.github.io/bfrpg-secondary-skills/module.json",
+  "download": "https://jax7778.github.io/bfrpg-secondary-skills/bfrpg-secondary-skills.zip",
   "scripts": ["scripts/module.js"]
 }

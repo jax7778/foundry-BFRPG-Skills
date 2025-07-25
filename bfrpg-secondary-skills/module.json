@@ -3,7 +3,7 @@
   "title": "BFRPG Secondary Skills",
   "description": "Implements the Secondary Skills system for Basic Fantasy RPG.",
   "version": "1.0.0",
-  "authors": [{ "name": "Your Name" }],
+  "authors": [{ "name": "jax7778" }],
   "system": "basicfantasy",
   "url": "https://github.com/foundry-BFRPG-Skills/bfrpg-secondary-skills",
   "manifest": "https://foundry-BFRPG-Skills.github.io/bfrpg-secondary-skills/module.json",

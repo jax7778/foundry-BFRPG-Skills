@@ -1,0 +1,12 @@
+{
+  "name": "bfrpg-secondary-skills",
+  "title": "BFRPG Secondary Skills",
+  "description": "Implements the Secondary Skills system for Basic Fantasy RPG.",
+  "version": "1.0.0",
+  "authors": [{ "name": "Your Name" }],
+  "system": "basicfantasy",
+  "url": "https://github.com/your-repo/bfrpg-secondary-skills",
+  "manifest": "https://your-repo.github.io/bfrpg-secondary-skills/module.json",
+  "download": "https://your-repo.github.io/bfrpg-secondary-skills/bfrpg-secondary-skills.zip",
+  "scripts": ["scripts/module.js"]
+}

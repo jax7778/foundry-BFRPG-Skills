@@ -4,38 +4,55 @@ Hooks.once("ready", () => {
 
 Hooks.on("renderActorSheet", (app, html, data) => {
   const actor = app.actor;
-  const skills = getProperty(actor.system, "skills") || {};
-  const container = $(`<div class="bfrpg-skills">
-    <h3>Secondary Skills</h3>
-  </div>`);
 
-  for (const [key, skill] of Object.entries(skills)) {
-    const mod = actor.system.abilities[skill.ability]?.mod ?? 0;
-    const btn = $(`<button data-skill="${key}">🎲</button>`);
-    btn.on("click", () => rollSkill(key, actor));
-    const row = $(`<div class="skill-row">
-      <span><strong>${skill.name}</strong> (Lvl ${skill.level}) — ${skill.ability.toUpperCase()} (${mod >= 0 ? "+" : ""}${mod})</span>
-    </div>`);
-    row.append(btn);
-    container.append(row);
-  }
+  // Retrieve stored secondary skills
+  const skills = getActorSkills(actor);
+  if (!skills || Object.keys(skills).length === 0) return;
 
-  html.find(".sheet-body").append(container);
+  // Create the new tab navigation item
+  const navTab = $(`<a class="item" data-tab="bfrpg-secondary-skills">Secondary Skills</a>`);
+  html.find('.sheet-navigation .item:last').after(navTab);
+
+  // Create the new tab content panel
+  const panel = $(`
+    <div class="tab" data-tab="bfrpg-secondary-skills">
+      <h3>Secondary Skills</h3>
+      <ul class="bfrpg-skill-list">
+        ${Object.entries(skills).map(([key, skill]) => `
+          <li class="bfrpg-skill-item">
+            <strong>${skill.name}</strong> (${skill.ability.toUpperCase()}) 
+            <button type="button" data-skill="${key}" class="bfrpg-roll-skill">🎲 Roll</button>
+          </li>
+        `).join("")}
+      </ul>
+    </div>
+  `);
+
+  html.find('.sheet-body').append(panel);
+
+  // Event handler for rolling skills
+  html.find('.bfrpg-roll-skill').on('click', event => {
+    const skillKey = event.currentTarget.dataset.skill;
+    rollSkill(skillKey, actor);
+  });
 });
 
-function rollSkill(skillKey, actor) {
-  const skill = actor.system.skills?.[skillKey];
-  if (!skill) return ui.notifications.warn(`Skill '${skillKey}' not found.`);
+function getActorSkills(actor) {
+  return foundry.utils.getProperty(actor, 'flags.bfrpg-secondary-skills.skills') || {};
+}
 
-  const abilityMod = actor.system.abilities[skill.ability]?.mod || 0;
-  const levelBonus = skill.level || 0;
-  const backgroundBonus = skill.fromBackground ? 1 : 0;
+function rollSkill(skillKey, actor) {
+  const skills = getActorSkills(actor);
+  const skill = skills[skillKey];
+  if (!skill) return ui.notifications.warn("Skill not found!");
+
+  const abilityMod = actor.system.abilities?.[skill.ability]?.mod || 0;
+  const bonus = skill.bonus || 0;
   const TN = getTargetNumber(skill);
 
-  const roll = new Roll("1d20 + @mod + @level + @bg", {
+  const roll = new Roll("1d20 + @mod + @bonus", {
     mod: abilityMod,
-    level: levelBonus,
-    bg: backgroundBonus
+    bonus: bonus
   });
 
   roll.roll({ async: true }).then(result => {

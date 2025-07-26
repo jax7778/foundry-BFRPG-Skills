@@ -1,0 +1,11 @@
+.bfrpg-skill-list {
+  list-style: none;
+  padding: 0;
+}
+
+.bfrpg-skill-item {
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
